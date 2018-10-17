@@ -1,40 +1,33 @@
 const React = require('react');
-const PropTypes = require('prop-types');
-
-const SelectedLanguage = props => (
-  <ul className="languages">
-  {props.languages.map(lang => (
-    <li
-      style={lang === props.selectedLanguage ? {color: '#d0021b'} : null}
-      onClick={ () => props.updateLanguage(lang)}
-      key={lang}>
-      {lang}
-    </li>
-  ))}
-</ul>
-);
-
-SelectedLanguage.propTypes = {
-  languages: PropTypes.array.isRequired,
-  selectedLanguage: PropTypes.string.isRequired,
-  updateLanguage: PropTypes.func.isRequired
-}
-
-
+const SelectedLanguage = require('./SelectedLanguage');
+const RepoGrid = require('./RepoGrid');
+const {fetchPopularRepos} = require('../utils.js/api');
 
 
 class Popular extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      selectedLanguage: 'All'
+      selectedLanguage: 'All',
+      repos: []
     }
 
     this.updateLanguage = this.updateLanguage.bind(this);
   }
   
   updateLanguage(lang){
-    this.setState({selectedLanguage: lang})
+    this.setState({
+      selectedLanguage: lang,
+      repos: []
+    });
+    fetchPopularRepos(lang)
+      .then(repos => {
+        this.setState({repos})
+      });
+  }
+
+  componentDidMount(){
+    this.updateLanguage(this.state.selectedLanguage);
   }
 
   render(){
@@ -42,9 +35,12 @@ class Popular extends React.Component {
     return (
       <div>
         <SelectedLanguage 
-        languages={languages}
-        selectedLanguage={this.state.selectedLanguage}
-        updateLanguage={this.updateLanguage}/>
+          languages={languages}
+          selectedLanguage={this.state.selectedLanguage}
+          updateLanguage={this.updateLanguage}/>
+
+          <RepoGrid
+            repos={this.state.repos}/>
       </div>
     )
   }
