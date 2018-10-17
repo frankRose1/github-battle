@@ -3,10 +3,12 @@ const {Link} = require('react-router-dom');
 
 class Home extends React.Component {
   render(){
-    <div className="home-container">
-      <h1>Githib Battle: Battle your friends...and stuff</h1>
-      <Link to="/battle" className="button">Battle</Link>
-    </div>
+    return (
+      <div className="home-container">
+        <h1>Githib Battle: Battle your friends...and stuff</h1>
+        <Link to="/battle" className="button">Battle</Link>
+      </div>
+    )
   }
 }
 
