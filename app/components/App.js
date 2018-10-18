@@ -16,7 +16,7 @@ class App extends React.Component {
           <Route exact path="/battle" component={Battle} />
           <Route path="/battle/results" component={Results} />
           <Route path="/popular" component={Popular} />
-          <Route render={() => <p>Not Found</p>} />
+          <Route render={() => <p style={{textAlign: 'center', fontSize: '35px'}}>Shoot! File Not Found :(</p>} />
         </Switch>
       </div>
     );

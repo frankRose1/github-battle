@@ -1,7 +1,8 @@
 const React = require('react');
 const SelectedLanguage = require('./SelectedLanguage');
 const RepoGrid = require('./RepoGrid');
-const {fetchPopularRepos} = require('../utils.js/api');
+const {fetchPopularRepos} = require('../utils/api');
+const Loading = require('./Loading');
 
 
 class Popular extends React.Component {
@@ -39,7 +40,7 @@ class Popular extends React.Component {
           selectedLanguage={this.state.selectedLanguage}
           updateLanguage={this.updateLanguage}/>
           {!this.state.repos
-            ? <p>Loading...</p>
+            ? <Loading />
             : <RepoGrid
                 repos={this.state.repos}/>}
       </div>

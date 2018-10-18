@@ -29,7 +29,6 @@ class Battle extends React.Component {
       [`${id}Name`]: username,
       [`${id}Image`]: `https://github.com/${username}.png?size=200`
     });
-    console.log(this.state)
   }
 
   render(){
@@ -44,20 +43,20 @@ class Battle extends React.Component {
                 label="Player One"
                 onSubmit={this.handleSubmit}/>
             : <PlayerPreview
-                id="playerOne"
                 avatar={playerOneImage}
-                username={playerOneName}
-                onReset={this.handleReset}/> }
+                username={playerOneName}>
+                  <button className="reset" onClick={ () => this.handleReset('playerOne') }>reset</button>
+                </PlayerPreview> }
           {!playerTwoName
             ? <PlayerInput 
                 id="playerTwo"
                 label="Player Two"
                 onSubmit={this.handleSubmit}/>
             : <PlayerPreview
-                id="playerTwo"
                 avatar={playerTwoImage}
-                username={playerTwoName}
-                onReset={this.handleReset}/> }
+                username={playerTwoName}>
+                  <button className="reset" onClick={ () => this.handleReset('playerTwo') }>reset</button>
+                </PlayerPreview> }
         </div>
         {playerOneImage && playerTwoImage && 
         <Link
