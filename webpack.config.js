@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
   //3) where to put the bundled file
 
 module.exports = {
-  entry: './app/index.js',
+  entry: [ '@babel/polyfill', './app/index.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index_bundle.js',

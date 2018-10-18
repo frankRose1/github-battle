@@ -1,30 +1,26 @@
-const React = require('react');
-const PlayerInput = require('./PlayerInput');
-const PlayerPreview = require('./PlayerPreview');
-const {Link} = require('react-router-dom');
+import React from 'react';
+import {Link} from 'react-router-dom';
+import PlayerInput from './PlayerInput';
+import PlayerPreview from './PlayerPreview';
+
 
 class Battle extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
+
+  state = {
       playerOneName: '',
       playerTwoName: '',
       playerOneImage: null,
       playerTwoImage: null
     }
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleReset = this.handleReset.bind(this);
-  }
-
-  handleReset(id){
+  handleReset = (id) => {
     this.setState({
       [`${id}Name`]: '',
       [`${id}Image`]: null
     });
   }
 
-  handleSubmit(id, username){
+  handleSubmit = (id, username) => {
     this.setState({
       [`${id}Name`]: username,
       [`${id}Image`]: `https://github.com/${username}.png?size=200`
@@ -72,4 +68,4 @@ class Battle extends React.Component {
   }
 }
 
-module.exports = Battle;
+export default Battle;

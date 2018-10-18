@@ -1,21 +1,21 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const RepoGrid = ({repos}) => (
   <ul className="popular-list">
-    {repos.map((repo, i) => (
-      <li key={repo.name} className="popular-item">
+    {repos.map(({name, owner, html_url, stargazers_count}, i) => (
+      <li key={name} className="popular-item">
         <p className="popular-rank">#{i + 1}</p>
         <ul className="space-list-items">
           <li>
             <img 
               className="avatar"
-              src={repo.owner.avatar_url} 
-              alt={`${repo.owner.login}'s picture`}/>
+              src={owner.avatar_url} 
+              alt={`${owner.login}'s picture`}/>
             </li>
-            <li><a href={repo.html_url}>{repo.name}</a></li>
-            <li>@{repo.owner.login}</li>
-            <li>{repo.stargazers_count} stars</li>
+            <li><a href={html_url}>{name}</a></li>
+            <li>@{owner.login}</li>
+            <li>{stargazers_count} stars</li>
         </ul>
       </li>
     ))}
@@ -26,4 +26,4 @@ RepoGrid.propTypes = {
   repos: PropTypes.array.isRequired
 };
 
-module.exports = RepoGrid;
+export default RepoGrid;

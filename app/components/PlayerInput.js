@@ -1,22 +1,28 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 
 class PlayerInput extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      username: ''
-    }
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+  }
+  
+  static defaultProps = {
+    label: 'Username',
   }
 
-  handleChange(e){
-    this.setState({username: e.target.value});
+  state = {
+    username: ''
   }
 
-  handleSubmit(e){
+  handleChange = (e) => {
+    const val = e.target.value;
+    this.setState({username: val});
+  }
+
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.onSubmit(this.props.id, this.state.username);
   }
@@ -43,14 +49,4 @@ class PlayerInput extends React.Component {
   }
 }
 
-PlayerInput.propTypes = {
-  id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-}
-
-PlayerInput.defaultProps = {
-  label: 'Username',
-}
-
-module.exports = PlayerInput;
+export default PlayerInput;

@@ -1,41 +1,41 @@
-const React = require('react');
-const {parse} = require('query-string');
-const {Link} = require('react-router-dom');
-const {battle} = require('../utils/api');
-const Player = require('./Player');
-const Loading = require('./Loading');
+import React from 'react';
+import {parse} from 'query-string';
+import {Link} from 'react-router-dom';
+import {battle} from '../utils/api';
+import Player from './Player';
+import Loading from './Loading';
 
 class Results extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      loading: true,
-      winner: null,
-      loser: null,
-      error: null
-    }
+  
+  state = {
+    loading: true,
+    winner: null,
+    loser: null,
+    error: null
   }
-  componentDidMount(){
+
+  async componentDidMount(){
     const {playerOneName, playerTwoName} = parse(this.props.location.search);
-    battle([
+    const players = await battle([
       playerOneName,
       playerTwoName
-    ]).then(res => {
-      if(!res){
-        this.setState({
-          error: 'Looks like there was an error! Check to see that both users exist on github.',
-          loading: false
-        });
-        return;
-      }
+    ]);
+    
+    if(!players){
       this.setState({
-        loading: false, 
-        error: null, 
-        winner: res[0],
-        loser: res[1]
-      })
+        error: 'Looks like there was an error! Check to see that both users exist on github.',
+        loading: false
+      });
+      return;
+    }
+    this.setState({
+      loading: false, 
+      error: null, 
+      winner: res[0],
+      loser: res[1]
     })
   }
+
   render (){
     const {loading, winner, loser, error} = this.state;
 
@@ -67,4 +67,4 @@ class Results extends React.Component {
   }
 }
 
-module.exports = Results;
+export default Results;

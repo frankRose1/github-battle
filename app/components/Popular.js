@@ -1,30 +1,25 @@
-const React = require('react');
-const SelectedLanguage = require('./SelectedLanguage');
-const RepoGrid = require('./RepoGrid');
-const {fetchPopularRepos} = require('../utils/api');
-const Loading = require('./Loading');
+import React from 'react';
+import SelectedLanguage from './SelectedLanguage';
+import RepoGrid from './RepoGrid';
+import {fetchPopularRepos} from '../utils/api';
+import Loading from './Loading';
 
 
 class Popular extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
+    
+    state = {
       selectedLanguage: 'All',
       repos: null
     }
 
-    this.updateLanguage = this.updateLanguage.bind(this);
-  }
-  
-  updateLanguage(lang){
+  updateLanguage = async (lang) => {
     this.setState({
       selectedLanguage: lang,
       repos: null
     });
-    fetchPopularRepos(lang)
-      .then(repos => {
-        this.setState({repos})
-      });
+
+    const repos = await fetchPopularRepos(lang);
+    this.setState({repos});
   }
 
   componentDidMount(){
@@ -32,20 +27,20 @@ class Popular extends React.Component {
   }
 
   render(){
+    const {selectedLanguage, repos} = this.state;
     const languages = ['All', 'JavaScript', 'Ruby', 'Python', 'CSS', 'Java'];
     return (
       <div>
         <SelectedLanguage 
           languages={languages}
-          selectedLanguage={this.state.selectedLanguage}
+          selectedLanguage={selectedLanguage}
           updateLanguage={this.updateLanguage}/>
-          {!this.state.repos
+          {!repos
             ? <Loading />
             : <RepoGrid
-                repos={this.state.repos}/>}
+                repos={repos}/>}
       </div>
     )
   }
 }
-
-module.exports = Popular;
+export default Popular;

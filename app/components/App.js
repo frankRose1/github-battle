@@ -1,10 +1,10 @@
-const React = require('react');
-const Popular = require('./Popular');
-const {Route, Switch} = require('react-router-dom');
-const Nav = require('./Nav');
-const Home = require('./Home');
-const Battle = require('./Battle');
-const Results  = require('./Results');
+import React from 'react';
+import {Route, Switch} from 'react-router-dom';
+import Popular from './Popular';
+import Nav from './Nav';
+import Home from './Home';
+import Battle from './Battle';
+import Results  from './Results';
 
 class App extends React.Component {
   render(){
@@ -23,4 +23,4 @@ class App extends React.Component {
   }
 }
 
-module.exports = App;
+export default App;
